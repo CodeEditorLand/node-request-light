@@ -1,36 +1,8 @@
 {
-	"name": "request-light",
-	"version": "0.0.1",
-	"private": false,
-	"description": "Lightweight request library. Promise based, with proxy support.",
-	"homepage": "https://github.com/CodeEditorLand/Foundation#readme",
-	"bugs": {
-		"url": "https://github.com/CodeEditorLand/Foundation/issues"
-	},
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/CodeEditorLand/Foundation.git"
-	},
-	"license": "SEE LICENSE IN LICENSE",
-	"author": {
-		"name": "Playform",
-		"email": "Hello@Playform.Cloud",
-		"url": "https://playform.cloud"
-	},
-	"type": "module",
-	"main": "./lib/node/main.js",
 	"browser": {
 		"./lib/node/main.js": "./lib/browser/main.js"
 	},
-	"typings": "./api",
-	"scripts": {
-		"bundle": "webpack --mode production --devtool hidden-source-map",
-		"clean": "rimraf lib",
-		"compile": "webpack",
-		"prepack": "npm run clean && npm run bundle && tsc -p ./src/test/ && ava ./lib/test/test.js",
-		"prepublishOnly": "TypeScriptESBuild 'Source/**/*.ts'",
-		"watch": "webpack --watch"
-	},
+	"description": "Lightweight request library. Promise based, with proxy support.",
 	"devDependencies": {
 		"@types/node": "16.x",
 		"ava": "^5.3.1",
@@ -46,7 +18,16 @@
 		"webpack": "^5.88.2",
 		"webpack-cli": "^5.1.4"
 	},
-	"publishConfig": {
-		"access": "public"
-	}
+	"main": "./lib/node/main.js",
+	"name": "request-light",
+	"scripts": {
+		"bundle": "webpack --mode production --devtool hidden-source-map",
+		"clean": "rimraf lib",
+		"compile": "webpack",
+		"prepack": "npm run clean && npm run bundle && tsc -p ./src/test/ && ava ./lib/test/test.js",
+		"prepublishOnly": "TypeScriptESBuild 'Source/**/*.ts'",
+		"watch": "webpack --watch"
+	},
+	"type": "module",
+	"typings": "./api"
 }
