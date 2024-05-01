@@ -37,13 +37,13 @@
 	"devDependencies": {
 		"@playform/build": "0.0.7",
 		"@playform/document": "0.0.6",
-		"@types/node": "16.x",
-		"ava": "^5.3.1",
-		"http-proxy-agent": "^5.0.0",
-		"https-proxy-agent": "^5.0.1",
-		"proxy": "^2.1.1",
-		"rimraf": "^5.0.1",
-		"ts-loader": "^9.4.4"
+		"@types/node": "20.x",
+		"ava": "6.1.2",
+		"http-proxy-agent": "7.0.2",
+		"https-proxy-agent": "7.0.4",
+		"proxy": "2.1.1",
+		"rimraf": "5.0.5",
+		"ts-loader": "9.5.1"
 	},
 	"publishConfig": {
 		"access": "public"
