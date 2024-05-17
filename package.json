@@ -1,26 +1,6 @@
 {
 	"name": "request-light",
-	"version": "0.0.1",
-	"private": false,
 	"description": "Lightweight request library. Promise based, with proxy support.",
-	"keywords": [
-		"land"
-	],
-	"homepage": "HTTPS://GitHub.Com/CodeEditorLand/NodeRequestLight#readme",
-	"bugs": {
-		"url": "HTTPS://GitHub.Com/CodeEditorLand/NodeRequestLight/issues"
-	},
-	"repository": {
-		"type": "git",
-		"url": "git+HTTPS://github.com/CodeEditorLand/NodeRequestLight.git"
-	},
-	"license": "SEE LICENSE IN LICENSE",
-	"author": {
-		"name": "🛬 Land —",
-		"email": "Land@PlayForm.Cloud",
-		"url": "HTTPS://Land.PlayForm.Cloud"
-	},
-	"type": "module",
 	"main": "./lib/node/main.js",
 	"browser": {
 		"./lib/node/main.js": "./lib/browser/main.js"
@@ -36,7 +16,6 @@
 	},
 	"devDependencies": {
 		"@playform/build": "0.0.7",
-		"@playform/document": "0.0.6",
 		"@types/node": "20.x",
 		"ava": "6.1.3",
 		"http-proxy-agent": "7.0.2",
@@ -44,8 +23,5 @@
 		"proxy": "2.1.1",
 		"rimraf": "5.0.5",
 		"ts-loader": "9.5.1"
-	},
-	"publishConfig": {
-		"access": "public"
 	}
 }
