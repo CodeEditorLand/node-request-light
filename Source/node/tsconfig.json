@@ -1,11 +1,14 @@
-{
-	"compilerOptions": {
-		"target": "ES5",
-		"module": "commonjs",
-		"moduleResolution": "node",
-		"sourceMap": true,
-		"stripInternal": true,
-		"outDir": "../../lib/node",
-		"lib": ["es5", "es2015.promise"]
-	}
-}
+{ 
+ 	"compilerOptions": { 
+ 		"target": "ES5", 
+ 		"module": "commonjs", 
+ 		"moduleResolution": "node", 
+ 		"sourceMap": true, 
+ 		"stripInternal": true, 
+ 		"outDir": "../../lib/node",
+		"lib": [
+			"es5",
+			"es2015.promise"
+		]
+	 }
+} 
