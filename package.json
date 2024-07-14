@@ -1,24 +1,8 @@
 {
-	"name": "request-light",
-	"description": "Lightweight request library. Promise based, with proxy support.",
-	"exports": {
-		".": {
-			"browser": "./lib/browser/main.js",
-			"default": "./lib/node/main.js",
-			"types": "./api.d.ts"
-		}
-	},
-	"main": "./lib/node/main.js",
 	"browser": {
 		"./lib/node/main.js": "./lib/browser/main.js"
 	},
-	"typings": "./api",
-	"scripts": {
-		"bundle": "webpack --mode production --devtool hidden-source-map",
-		"clean": "rimraf lib",
-		"compile": "webpack",
-		"prepack": "npm run clean && npm run bundle && tsc -p ./src/test/ && ava ./lib/test/test.js"
-	},
+	"description": "Lightweight request library. Promise based, with proxy support.",
 	"devDependencies": {
 		"@types/node": "18.x",
 		"ava": "^6.1.3",
@@ -27,5 +11,21 @@
 		"proxy": "^2.2.0",
 		"rimraf": "^5.0.7",
 		"ts-loader": "^9.5.1"
-	}
+	},
+	"exports": {
+		".": {
+			"browser": "./lib/browser/main.js",
+			"default": "./lib/node/main.js",
+			"types": "./api.d.ts"
+		}
+	},
+	"main": "./lib/node/main.js",
+	"name": "request-light",
+	"scripts": {
+		"bundle": "webpack --mode production --devtool hidden-source-map",
+		"clean": "rimraf lib",
+		"compile": "webpack",
+		"prepack": "npm run clean && npm run bundle && tsc -p ./src/test/ && ava ./lib/test/test.js"
+	},
+	"typings": "./api"
 }
