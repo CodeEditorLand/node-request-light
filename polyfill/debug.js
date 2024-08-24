@@ -1,12 +1,11 @@
-
 Object.defineProperty(exports, "__esModule", { value: true });
 
 function log() {
-    // ignore
+	// ignore
 }
 
 function createDebug(namespace) {
-    return log;
+	return log;
 }
 
 exports.default = createDebug;
