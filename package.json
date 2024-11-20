@@ -1,17 +1,6 @@
 {
-	"browser": {
-		"./lib/node/main.js": "./lib/browser/main.js"
-	},
+	"name": "request-light",
 	"description": "Lightweight request library. Promise based, with proxy support.",
-	"devDependencies": {
-		"@types/node": "22.9.1",
-		"ava": "6.2.0",
-		"http-proxy-agent": "7.0.2",
-		"https-proxy-agent": "7.0.5",
-		"proxy": "2.2.0",
-		"rimraf": "6.0.1",
-		"ts-loader": "9.5.1"
-	},
 	"exports": {
 		".": {
 			"browser": "./lib/browser/main.js",
@@ -20,12 +9,23 @@
 		}
 	},
 	"main": "./lib/node/main.js",
-	"name": "request-light",
+	"browser": {
+		"./lib/node/main.js": "./lib/browser/main.js"
+	},
+	"typings": "./api",
 	"scripts": {
 		"bundle": "webpack --mode production --devtool hidden-source-map",
 		"clean": "rimraf lib",
 		"compile": "webpack",
 		"prepack": "npm run clean && npm run bundle && tsc -p ./src/test/ && ava ./lib/test/test.js"
 	},
-	"typings": "./api"
+	"devDependencies": {
+		"@types/node": "22.9.1",
+		"ava": "6.2.0",
+		"http-proxy-agent": "7.0.2",
+		"https-proxy-agent": "7.0.5",
+		"proxy": "2.2.0",
+		"rimraf": "6.0.1",
+		"ts-loader": "9.5.1"
+	}
 }
