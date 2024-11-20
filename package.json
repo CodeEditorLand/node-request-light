@@ -4,7 +4,7 @@
 	},
 	"description": "Lightweight request library. Promise based, with proxy support.",
 	"devDependencies": {
-		"@types/node": "22.9.0",
+		"@types/node": "22.9.1",
 		"ava": "6.2.0",
 		"http-proxy-agent": "7.0.2",
 		"https-proxy-agent": "7.0.5",
