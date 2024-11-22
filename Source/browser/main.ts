@@ -14,9 +14,11 @@ export const xhr: XHRRequest = async (
 	options: XHROptions,
 ): Promise<XHRResponse> => {
 	const requestHeaders = new Headers();
+
 	if (options.headers) {
 		for (const key in options.headers) {
 			const value = options.headers[key];
+
 			if (Array.isArray(value)) {
 				value.forEach((v) => requestHeaders.set(key, v));
 			} else {
@@ -36,11 +38,13 @@ export const xhr: XHRRequest = async (
 		mode: "cors",
 		headers: requestHeaders,
 	};
+
 	if (options.data) {
 		requestInit.body = options.data;
 	}
 	if (options.token) {
 		const controller = new AbortController();
+
 		if (options.token.isCancellationRequested) {
 			// see https://github.com/microsoft/TypeScript/issues/49609
 			(controller as any).abort();
@@ -52,7 +56,9 @@ export const xhr: XHRRequest = async (
 	}
 
 	const requestInfo = new Request(options.url, requestInit);
+
 	const response = await fetch(requestInfo);
+
 	const resposeHeaders: any = {};
 	response.headers.forEach((value, key) => {
 		resposeHeaders[key] = value;

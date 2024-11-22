@@ -13,6 +13,7 @@ import { HttpsProxyAgent } from "https-proxy-agent";
 import { XHRConfigure, XHROptions, XHRRequest, XHRResponse } from "../../api";
 
 let proxyUrl: string | undefined = undefined;
+
 let strictSSL: boolean = true;
 
 export const configure: XHRConfigure = (
@@ -40,10 +41,13 @@ export const xhr: XHRRequest = (options: XHROptions): Promise<XHRResponse> => {
 		(result) =>
 			new Promise<XHRResponse>((c, e) => {
 				const res = result.res;
+
 				let readable: import("stream").Readable = res;
+
 				let isCompleted = false;
 
 				const encoding = res.headers && res.headers["content-encoding"];
+
 				if (
 					encoding &&
 					!hasNoBody(options.type, result.res.statusCode)
@@ -52,6 +56,7 @@ export const xhr: XHRRequest = (options: XHROptions): Promise<XHRResponse> => {
 						flush: zlib.constants.Z_SYNC_FLUSH,
 						finishFlush: zlib.constants.Z_SYNC_FLUSH,
 					};
+
 					if (encoding === "gzip") {
 						const gunzip = zlib.createGunzip(zlibOptions);
 						res.pipe(gunzip);
@@ -69,12 +74,14 @@ export const xhr: XHRRequest = (options: XHROptions): Promise<XHRResponse> => {
 						return;
 					}
 					isCompleted = true;
+
 					if (
 						options.followRedirects > 0 &&
 						((res.statusCode >= 300 && res.statusCode <= 303) ||
 							res.statusCode === 307)
 					) {
 						let location = res.headers["location"];
+
 						if (location.startsWith("/")) {
 							const endpoint = parseUrl(options.url);
 							location = format({
@@ -97,6 +104,7 @@ export const xhr: XHRRequest = (options: XHROptions): Promise<XHRResponse> => {
 								token: options.token,
 							};
 							xhr(newOptions).then(c, e);
+
 							return;
 						}
 					}
@@ -121,6 +129,7 @@ export const xhr: XHRRequest = (options: XHROptions): Promise<XHRResponse> => {
 				});
 				readable.on("error", (err) => {
 					let response: XHRResponse | Error;
+
 					if (AbortError.is(err)) {
 						response = err;
 					} else {
@@ -150,6 +159,7 @@ export const xhr: XHRRequest = (options: XHROptions): Promise<XHRResponse> => {
 			}),
 		(err) => {
 			let response: XHRResponse | Error;
+
 			if (AbortError.is(err)) {
 				response = err;
 			} else {
@@ -186,6 +196,7 @@ function assign(destination: any, ...sources: any[]): any {
 	sources.forEach((source) =>
 		Object.keys(source).forEach((key) => (destination[key] = source[key])),
 	);
+
 	return destination;
 }
 
@@ -239,6 +250,7 @@ function request(options: XHROptions): Promise<RequestResult> {
 				res.headers["location"]
 			) {
 				let location = res.headers["location"];
+
 				if (location.startsWith("/")) {
 					location = format({
 						protocol: endpoint.protocol,
@@ -259,6 +271,7 @@ function request(options: XHROptions): Promise<RequestResult> {
 				c({ req, res });
 			}
 		};
+
 		if (endpoint.protocol === "https:") {
 			req = https.request(opts, handler);
 		} else {
@@ -296,68 +309,87 @@ export function getErrorStatusDescription(status: number): string {
 			return l10n.t(
 				"Bad request. The request cannot be fulfilled due to bad syntax.",
 			);
+
 		case 401:
 			return l10n.t("Unauthorized. The server is refusing to respond.");
+
 		case 403:
 			return l10n.t("Forbidden. The server is refusing to respond.");
+
 		case 404:
 			return l10n.t(
 				"Not Found. The requested location could not be found.",
 			);
+
 		case 405:
 			return l10n.t(
 				"Method not allowed. A request was made using a request method not supported by that location.",
 			);
+
 		case 406:
 			return l10n.t(
 				"Not Acceptable. The server can only generate a response that is not accepted by the client.",
 			);
+
 		case 407:
 			return l10n.t(
 				"Proxy Authentication Required. The client must first authenticate itself with the proxy.",
 			);
+
 		case 408:
 			return l10n.t(
 				"Request Timeout. The server timed out waiting for the request.",
 			);
+
 		case 409:
 			return l10n.t(
 				"Conflict. The request could not be completed because of a conflict in the request.",
 			);
+
 		case 410:
 			return l10n.t("Gone. The requested page is no longer available.");
+
 		case 411:
 			return l10n.t(
 				'Length Required. The "Content-Length" is not defined.',
 			);
+
 		case 412:
 			return l10n.t(
 				"Precondition Failed. The precondition given in the request evaluated to false by the server.",
 			);
+
 		case 413:
 			return l10n.t(
 				"Request Entity Too Large. The server will not accept the request, because the request entity is too large.",
 			);
+
 		case 414:
 			return l10n.t(
 				"Request-URI Too Long. The server will not accept the request, because the URL is too long.",
 			);
+
 		case 415:
 			return l10n.t(
 				"Unsupported Media Type. The server will not accept the request, because the media type is not supported.",
 			);
+
 		case 500:
 			return l10n.t("Internal Server Error.");
+
 		case 501:
 			return l10n.t(
 				"Not Implemented. The server either does not recognize the request method, or it lacks the ability to fulfill the request.",
 			);
+
 		case 502:
 			return l10n.t("Bad Gateway. The upstream server did not respond.");
+
 		case 503:
 			return l10n.t(
 				"Service Unavailable. The server is currently unavailable (overloaded or down).",
 			);
+
 		default:
 			return l10n.t("HTTP status code {0}", status);
 	}
@@ -391,6 +423,7 @@ function getProxyAgent(
 	options: ProxyOptions = {},
 ): HttpProxyAgent<string> | HttpsProxyAgent<string> | undefined {
 	const requestURL = parseUrl(rawRequestURL);
+
 	const proxyURL = options.proxyUrl || getSystemProxyURI(requestURL);
 
 	if (!proxyURL) {
