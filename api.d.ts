@@ -77,6 +77,7 @@ export type HttpsProxyAgent = any;
 export type Headers = { [header: string]: string | string[] | undefined };
 
 export declare const configure: XHRConfigure;
+
 export declare const xhr: XHRRequest;
 
 export declare function getErrorStatusDescription(status: number): string;
