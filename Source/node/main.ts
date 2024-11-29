@@ -21,6 +21,7 @@ export const configure: XHRConfigure = (
 	_strictSSL: boolean,
 ) => {
 	proxyUrl = _proxyUrl;
+
 	strictSSL = _strictSSL;
 };
 
@@ -30,9 +31,11 @@ export const xhr: XHRRequest = (options: XHROptions): Promise<XHRResponse> => {
 	if (typeof options.strictSSL !== "boolean") {
 		options.strictSSL = strictSSL;
 	}
+
 	if (!options.agent) {
 		options.agent = getProxyAgent(options.url, { proxyUrl, strictSSL });
 	}
+
 	if (typeof options.followRedirects !== "number") {
 		options.followRedirects = 5;
 	}
@@ -59,20 +62,28 @@ export const xhr: XHRRequest = (options: XHROptions): Promise<XHRResponse> => {
 
 					if (encoding === "gzip") {
 						const gunzip = zlib.createGunzip(zlibOptions);
+
 						res.pipe(gunzip);
+
 						readable = gunzip;
 					} else if (encoding === "deflate") {
 						const inflate = zlib.createInflate(zlibOptions);
+
 						res.pipe(inflate);
+
 						readable = inflate;
 					}
 				}
+
 				const data: any = [];
+
 				readable.on("data", (c) => data.push(c));
+
 				readable.on("end", () => {
 					if (isCompleted) {
 						return;
 					}
+
 					isCompleted = true;
 
 					if (
@@ -84,6 +95,7 @@ export const xhr: XHRRequest = (options: XHROptions): Promise<XHRResponse> => {
 
 						if (location.startsWith("/")) {
 							const endpoint = parseUrl(options.url);
+
 							location = format({
 								protocol: endpoint.protocol,
 								hostname: endpoint.hostname,
@@ -91,6 +103,7 @@ export const xhr: XHRRequest = (options: XHROptions): Promise<XHRResponse> => {
 								pathname: location,
 							});
 						}
+
 						if (location) {
 							const newOptions: XHROptions = {
 								type: options.type,
@@ -103,6 +116,7 @@ export const xhr: XHRRequest = (options: XHROptions): Promise<XHRResponse> => {
 								data: options.data,
 								token: options.token,
 							};
+
 							xhr(newOptions).then(c, e);
 
 							return;
@@ -127,6 +141,7 @@ export const xhr: XHRRequest = (options: XHROptions): Promise<XHRResponse> => {
 						e(response);
 					}
 				});
+
 				readable.on("error", (err) => {
 					let response: XHRResponse | Error;
 
@@ -144,7 +159,9 @@ export const xhr: XHRRequest = (options: XHROptions): Promise<XHRResponse> => {
 							headers: {},
 						};
 					}
+
 					isCompleted = true;
+
 					e(response);
 				});
 
@@ -152,6 +169,7 @@ export const xhr: XHRRequest = (options: XHROptions): Promise<XHRResponse> => {
 					if (options.token.isCancellationRequested) {
 						readable.destroy(new AbortError());
 					}
+
 					options.token.onCancellationRequested(() => {
 						readable.destroy(new AbortError());
 					});
@@ -211,6 +229,7 @@ function hasNoBody(method: string, code: number) {
 
 interface RequestResult {
 	req: http.ClientRequest;
+
 	res: http.IncomingMessage;
 }
 
@@ -259,6 +278,7 @@ function request(options: XHROptions): Promise<RequestResult> {
 						pathname: location,
 					});
 				}
+
 				c(
 					<any>request(
 						assign({}, options, {
@@ -283,6 +303,7 @@ function request(options: XHROptions): Promise<RequestResult> {
 		if (options.timeout) {
 			req.setTimeout(options.timeout);
 		}
+
 		if (options.data) {
 			req.write(options.data);
 		}
@@ -293,6 +314,7 @@ function request(options: XHROptions): Promise<RequestResult> {
 			if (options.token.isCancellationRequested) {
 				req.destroy(new AbortError());
 			}
+
 			options.token.onCancellationRequested(() => {
 				req.destroy(new AbortError());
 			});
@@ -304,6 +326,7 @@ export function getErrorStatusDescription(status: number): string {
 	if (status < 400) {
 		return void 0;
 	}
+
 	switch (status) {
 		case 400:
 			return l10n.t(
@@ -415,6 +438,7 @@ function getSystemProxyURI(requestURL: Url): string {
 
 interface ProxyOptions {
 	proxyUrl?: string;
+
 	strictSSL?: boolean;
 }
 
@@ -444,6 +468,7 @@ function getProxyAgent(
 class AbortError extends Error {
 	constructor() {
 		super("The user aborted a request");
+
 		this.name = "AbortError";
 
 		// see https://github.com/microsoft/TypeScript/issues/13965

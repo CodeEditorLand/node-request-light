@@ -26,12 +26,14 @@ export const xhr: XHRRequest = async (
 			}
 		}
 	}
+
 	if (options.user && options.password) {
 		requestHeaders.set(
 			"Authorization",
 			"Basic " + btoa(options.user + ":" + options.password),
 		);
 	}
+
 	const requestInit: RequestInit = {
 		method: options.type,
 		redirect: options.followRedirects > 0 ? "follow" : "manual",
@@ -42,6 +44,7 @@ export const xhr: XHRRequest = async (
 	if (options.data) {
 		requestInit.body = options.data;
 	}
+
 	if (options.token) {
 		const controller = new AbortController();
 
@@ -49,9 +52,11 @@ export const xhr: XHRRequest = async (
 			// see https://github.com/microsoft/TypeScript/issues/49609
 			(controller as any).abort();
 		}
+
 		options.token.onCancellationRequested(() => {
 			(controller as any).abort();
 		});
+
 		requestInit.signal = controller.signal;
 	}
 
@@ -60,6 +65,7 @@ export const xhr: XHRRequest = async (
 	const response = await fetch(requestInfo);
 
 	const resposeHeaders: any = {};
+
 	response.headers.forEach((value, key) => {
 		resposeHeaders[key] = value;
 	});
@@ -70,10 +76,13 @@ export const xhr: XHRRequest = async (
 		get responseText() {
 			return new TextDecoder().decode(buffer);
 		}
+
 		get body() {
 			return new Uint8Array(buffer);
 		}
+
 		readonly status = response.status;
+
 		readonly headers = resposeHeaders;
 	})();
 };

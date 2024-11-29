@@ -4,22 +4,35 @@
  *--------------------------------------------------------------------------------------------*/
 export interface XHROptions {
 	type?: string;
+
 	url: string;
+
 	user?: string;
+
 	password?: string;
+
 	headers?: Headers;
+
 	timeout?: number;
+
 	data?: string;
+
 	strictSSL?: boolean;
+
 	followRedirects?: number;
+
 	token?: CancellationToken;
+
 	agent?: HttpProxyAgent | HttpsProxyAgent;
 }
 
 export interface XHRResponse {
 	readonly responseText: string;
+
 	readonly body: Uint8Array;
+
 	readonly status: number;
+
 	readonly headers: Headers;
 }
 
