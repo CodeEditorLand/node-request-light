@@ -21,7 +21,7 @@
 	},
 	"dependencies": {},
 	"devDependencies": {
-		"@types/node": "22.10.10",
+		"@types/node": "22.13.0",
 		"ava": "6.2.0",
 		"http-proxy-agent": "7.0.2",
 		"https-proxy-agent": "7.0.6",
